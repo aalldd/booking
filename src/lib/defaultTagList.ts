@@ -1,3 +1,7 @@
+type TagList = {
+  tagName: string;
+  IconName: string;
+}
 const defaultTagList: TagList[] = [
   {
     tagName:'食',
