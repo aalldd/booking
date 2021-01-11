@@ -1,11 +1,11 @@
 <template>
   <div class="statistics">
     <PersonInfo></PersonInfo>
-    <Balance :balance="balance"></Balance>
+    <Balance :budget="budget"></Balance>
     <ButtonGroup
-        @withdraw="getWithdrawNum"
-        :balance="balance"
-        @balanceAmount="balanceAmount"
+        @withdraw="withdrawBudget"
+        :balance="budget"
+        @balanceAmount="addBudget"
     ></ButtonGroup>
     <Nav :balance="flow"></Nav>
     <Activity></Activity>
@@ -29,38 +29,26 @@ import Layout from '@/components/statistics/Layout.vue';
 })
 export default class statistics extends Vue {
   recordList = [];
-  balance = 0;
+  budget=0;
   flow=0;
-  @Watch("flow")
-  onFlowChanged(val: number,oldVal: number){
-    let changedVal=val-oldVal
-    this.$store.commit('balanceAmount',changedVal)
-  }
-  //初始化数据
-  initData() {
-    this.$store.commit('saveBalance');
-    this.$store.commit('saveTagList');
-    this.$store.commit('saveRecordList');
-  }
 
   created() {
     this.$store.commit('fetchRecordList');
-    this.$store.commit('fetchBalance');
     this.$store.commit('fetchFlow')
+    this.$store.commit('fetchBudget')
     this.recordList = this.$store.state.recordList;
-    this.balance = this.$store.state.balance;
     this.flow=this.$store.state.flow
+    this.budget=this.$store.state.budget
   }
-  //取钱
-  getWithdrawNum(value: number) {
-    this.$store.commit('withdrawBalance', value);
-    this.balance = this.$store.state.balance;
+  withdrawBudget(value: number){
+    this.$store.commit('withdrawBudget',value)
+    this.$store.commit('fetchBudget')
+    this.budget=this.$store.state.budget
   }
-  //存钱
-  balanceAmount(value: number) {
-    console.log(value);
-    this.$store.commit('balanceAmount', value);
-    this.balance = this.$store.state.balance;
+  addBudget(value: number){
+    this.$store.commit('addBudget',value)
+    this.$store.commit('fetchBudget')
+    this.budget=this.$store.state.budget
   }
 }
 </script>

@@ -8,9 +8,8 @@ Vue.use(Vuex);
 type RootState = {
   tagList: TagList[],
   recordList: Record[],
-  balance: number,
   flow: number,
-  deposit:number
+  budget:number
 }
 type Record = {
   ExpenseType: string,
@@ -28,9 +27,8 @@ const store = new Vuex.Store({
   state: {
     tagList: defaultTagList,
     recordList: [],
-    balance: 0,
     flow: 0,
-    deposit:0
+    budget:0
   } as RootState,
   mutations: {
     fetchTagList(state) {
@@ -53,28 +51,26 @@ const store = new Vuex.Store({
       state.recordList.push(record2);
       store.commit('saveRecordList');
     },
-    saveBalance(state) {
-      window.localStorage.setItem('balance', JSON.stringify(state.balance));
-    },
-    fetchBalance(state) {
-      state.balance=Number(window.localStorage.getItem('balance'))
-    },
-    withdrawBalance(state, value) {
-      state.balance -= value;
-      store.commit('saveBalance');
-      store.commit('fetchBalance');
-    },
-    balanceAmount(state, value) {
-      state.balance += value;
-      store.commit('saveBalance');
-      store.commit('fetchBalance');
-    },
     fetchFlow(state) {
       state.flow = Number(window.localStorage.getItem('flow'));
     },
     saveFlow(state, value: number) {
       state.flow = value;
       window.localStorage.setItem('flow', JSON.stringify(state.flow));
+    },
+    withdrawBudget(state,value: number){
+      state.budget-=value
+      store.commit('saveBudget')
+    },
+    addBudget(state,value: number){
+      state.budget+=value
+      store.commit('saveBudget')
+    },
+    saveBudget(state){
+      window.localStorage.setItem('budget',JSON.stringify(state.budget))
+    },
+    fetchBudget(state){
+      state.budget=Number(window.localStorage.getItem('budget'))
     }
   },
 });
