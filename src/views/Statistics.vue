@@ -1,9 +1,13 @@
 <template>
   <div class="statistics">
     <PersonInfo></PersonInfo>
-    <Balance></Balance>
-    <ButtonGroup></ButtonGroup>
-    <Nav></Nav>
+    <Balance :deposit="deposit"></Balance>
+    <ButtonGroup
+        @withdraw="getWithdrawNum"
+        :deposit="deposit"
+        @depositAmount="depositAmount"
+    ></ButtonGroup>
+    <Nav :balance="deposit"></Nav>
     <Activity></Activity>
     <Layout></Layout>
   </div>
@@ -24,6 +28,29 @@ import Layout from '@/components/statistics/Layout.vue';
   components: {PersonInfo, Balance, ButtonGroup, Nav, Activity, Layout}
 })
 export default class statistics extends Vue {
+  recordList=[]
+  deposit=0
+  //初始化数据
+  initData(){
+    this.$store.commit('saveDeposit')
+    this.$store.commit('saveTagList')
+    this.$store.commit('saveRecordList')
+  }
+  created(){
+    this.initData()
+    this.$store.commit('fetchRecordList')
+    this.$store.commit('fetchDeposit')
+    this.recordList=this.$store.state.recordList
+    this.deposit=this.$store.state.deposit
+  }
+  getWithdrawNum(value: number){
+    this.$store.commit('withdrawDeposit',value)
+    this.deposit=this.$store.state.deposit
+  }
+  depositAmount(value: number){
+    this.$store.commit('depositAmount',value)
+    this.deposit=this.$store.state.deposit
+  }
 }
 </script>
 

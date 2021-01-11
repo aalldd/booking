@@ -7,6 +7,10 @@
         v-model="value"
         :show="true"
         :maxlength="14"
+        theme="custom"
+        close-button-text="OK"
+        extra-key="."
+        @blur="setAmount"
     />
   </div>
 </template>
@@ -17,6 +21,9 @@ import {Component} from 'vue-property-decorator';
 @Component
 export default class NumberPad extends Vue{
   value = '';
+  setAmount(value: number){
+    this.$emit('giveNumber',this.value)
+  }
 }
 </script>
 

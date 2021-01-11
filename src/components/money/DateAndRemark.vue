@@ -2,12 +2,12 @@
   <div>
     <div class="dateAndRemark">
       <div class="date">
-        <input type="text" placeholder="2021-01-09" v-model="setDate">
+        <input readonly type="text" placeholder="2021-01-09" v-model="createAt">
         <div class="calendarIconWrapper" @click="datePickerVisible=true">
           <Icon name="calendar"></Icon>
         </div>
       </div>
-      <div class="remarks">
+      <div class="remarks" @click="AddRemark">
         <button>remarks</button>
       </div>
     </div>
@@ -25,32 +25,38 @@
 </template>
 
 <script lang='ts'>
+/* eslint-disable */
 import Vue from 'vue';
-import {Component} from 'vue-property-decorator';
+import {Component, Prop} from 'vue-property-decorator';
 import Icon from '@/components/Icon.vue';
+import dayjs from 'dayjs';
+
 @Component({
-  components:{Icon}
+  components: {Icon}
 })
-export default class DateAndRemark extends Vue{
+export default class DateAndRemark extends Vue {
   minDate = new Date(2020, 0, 1);
   maxDate = new Date(2025, 10, 1);
   currentDate = new Date();
   datePickerVisible = false;
-  setDate = new Date().toISOString().split('T')[0];
-
+  @Prop({required: true}) createAt: string | undefined;
   confirmDate(value: Date) {
-    //组件这里存在bug，选择出来的日期少一天，蛋疼
-    const date=value.toISOString().split('T')[0].split('-')
-    const day=value.toISOString().split('T')[0].split('-')[2]
-    const realDay=(parseInt(day)+1).toString()
-    const realDate=`${date[0]}-${date[1]}-${realDay}`
-    this.setDate = realDate;
-    this.datePickerVisible=false;
+    const date = dayjs(value).format('YYYY-MM-DD');
+    this.$emit('update-createAt', date);
+    this.datePickerVisible = false;
   }
 
   closeDate() {
-    this.setDate = new Date().toISOString().split('T')[0];
     this.datePickerVisible = false;
+  }
+
+  AddRemark() {
+    const remark=window.prompt('有什么备注信息将要说明吗?')
+    if(remark){
+      this.$emit('giveRemark',remark)
+    }else {
+      window.alert('备注信息不要为空哦')
+    }
   }
 }
 </script>
@@ -95,7 +101,8 @@ export default class DateAndRemark extends Vue{
     }
   }
 }
-.van-picker{
+
+.van-picker {
   position: relative;
   bottom: -50px;
   left: 0;
