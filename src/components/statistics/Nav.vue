@@ -1,6 +1,6 @@
 <template>
   <div class="nav">
-    <div class="staking">Staking Balance</div>
+    <div class="staking">Capital flow</div>
     <div class="amount-staking">${{balance}}</div>
   </div>
 </template>

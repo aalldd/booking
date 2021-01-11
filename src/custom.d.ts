@@ -12,5 +12,5 @@ type Record = {
 type RootState = {
   tagList: TagList[];
   recordList: Record[];
-  deposit: number;
+  balance: number;
 }

@@ -1,13 +1,13 @@
 <template>
   <div class="statistics">
     <PersonInfo></PersonInfo>
-    <Balance :deposit="deposit"></Balance>
+    <Balance :balance="balance"></Balance>
     <ButtonGroup
         @withdraw="getWithdrawNum"
-        :deposit="deposit"
-        @depositAmount="depositAmount"
+        :balance="balance"
+        @balanceAmount="balanceAmount"
     ></ButtonGroup>
-    <Nav :balance="deposit"></Nav>
+    <Nav :balance="flow"></Nav>
     <Activity></Activity>
     <Layout></Layout>
   </div>
@@ -16,7 +16,7 @@
 <script lang='ts'>
 /* eslint-disable */
 import Vue from 'vue';
-import {Component} from 'vue-property-decorator';
+import {Component, Watch} from 'vue-property-decorator';
 import PersonInfo from '@/components/statistics/PersonInfo.vue';
 import Balance from '@/components/statistics/Balance.vue';
 import ButtonGroup from '@/components/statistics/ButtonGroup.vue';
@@ -28,28 +28,39 @@ import Layout from '@/components/statistics/Layout.vue';
   components: {PersonInfo, Balance, ButtonGroup, Nav, Activity, Layout}
 })
 export default class statistics extends Vue {
-  recordList=[]
-  deposit=0
+  recordList = [];
+  balance = 0;
+  flow=0;
+  @Watch("flow")
+  onFlowChanged(val: number,oldVal: number){
+    let changedVal=val-oldVal
+    this.$store.commit('balanceAmount',changedVal)
+  }
   //初始化数据
-  initData(){
-    this.$store.commit('saveDeposit')
-    this.$store.commit('saveTagList')
-    this.$store.commit('saveRecordList')
+  initData() {
+    this.$store.commit('saveBalance');
+    this.$store.commit('saveTagList');
+    this.$store.commit('saveRecordList');
   }
-  created(){
-    this.initData()
-    this.$store.commit('fetchRecordList')
-    this.$store.commit('fetchDeposit')
-    this.recordList=this.$store.state.recordList
-    this.deposit=this.$store.state.deposit
+
+  created() {
+    this.$store.commit('fetchRecordList');
+    this.$store.commit('fetchBalance');
+    this.$store.commit('fetchFlow')
+    this.recordList = this.$store.state.recordList;
+    this.balance = this.$store.state.balance;
+    this.flow=this.$store.state.flow
   }
-  getWithdrawNum(value: number){
-    this.$store.commit('withdrawDeposit',value)
-    this.deposit=this.$store.state.deposit
+  //取钱
+  getWithdrawNum(value: number) {
+    this.$store.commit('withdrawBalance', value);
+    this.balance = this.$store.state.balance;
   }
-  depositAmount(value: number){
-    this.$store.commit('depositAmount',value)
-    this.deposit=this.$store.state.deposit
+  //存钱
+  balanceAmount(value: number) {
+    console.log(value);
+    this.$store.commit('balanceAmount', value);
+    this.balance = this.$store.state.balance;
   }
 }
 </script>

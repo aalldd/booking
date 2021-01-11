@@ -40,7 +40,6 @@ type Record = {
 }
 @Component
 export default class Activity extends Vue {
-  type = 'income';
 
   get recordList() {
     return this.$store.state.recordList as Record[];
@@ -67,19 +66,21 @@ export default class Activity extends Vue {
     result.map(group => {
       const total = group.items.reduce((sum, item) => {
         if(item.ExpenseType==='income'){
-          sum=sum+item.amount
+          sum+=Number(item.amount)
         }else {
-          sum=sum-item.amount
+          sum=sum-=item.amount
         }
         return sum;
       },0);
-      if(total<0){
-        group.total=total
-      }else {
-        const res= parseFloat(total.toString().substring(1))
-        group.total=res
-      }
+      group.total=total
     });
+    let sum=0
+    result.forEach(item=>{
+      if(item.total){
+        sum+=item.total
+      }
+    })
+    this.$store.commit('saveFlow',sum)
     return result;
   }
 

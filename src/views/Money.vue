@@ -30,6 +30,7 @@ import Labels from '@/components/money/Labels.vue';
 import NumberPad from '@/components/money/NumberPad.vue';
 import DateAndRemark from '@/components/money/DateAndRemark.vue';
 import dayjs from 'dayjs';
+import {Dialog} from 'vant';
 
 type TagList = {
   tagName: string;
@@ -102,7 +103,13 @@ export default class Money extends Vue {
 //  将record数据放到state中
   submitRecords(){
     if(this.record.ExpenseType&&this.record.createAt&&this.record.amount){
-      this.$store.commit('createRecord',this.record)
+      Dialog.alert({
+        title:'弹出框',
+        message:'确定要提交数据吗'
+      }).then(()=>{
+        this.$store.commit('createRecord',this.record)
+      }).catch(()=>{
+      })
     }else {
       window.alert('请输入开销类型,金额,日期')
     }

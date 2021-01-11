@@ -1,7 +1,7 @@
 <template>
   <div class="buttonWrapper">
     <button class="withdraw" @click="withdraw">Withdraw</button>
-    <button class="deposit" @click="depositAmount">Deposit</button>
+    <button class="balance" @click="balanceAmount">deposit</button>
   </div>
 </template>
 
@@ -11,13 +11,13 @@ import {Component, Prop} from 'vue-property-decorator';
 
 @Component
 export default class ButtonGroup extends Vue {
-  @Prop({required: true}) deposit!: number;
+  @Prop({required: true}) balance!: number;
 
   withdraw() {
     const withdrawNum = window.prompt('您想要撤回多少预算呢');
     if (withdrawNum) {
       const withdrawAcc = parseFloat(withdrawNum);
-      if (withdrawAcc > this.deposit) {
+      if (withdrawAcc > this.balance) {
         window.alert('你以为可以花呗借款呢，撤回的金额不能大于存款');
       } else if (withdrawAcc < 0) {
         window.alert('你是要存钱还是取钱？不要跟爸爸闹');
@@ -28,14 +28,14 @@ export default class ButtonGroup extends Vue {
       window.alert('请不要跟我闹，输入撤回的金额');
     }
   }
-  depositAmount(){
+  balanceAmount(){
     const value=window.prompt('请出入您要存款的金额')
     if(value){
-      const depositAcc=parseFloat(value)
-      if(depositAcc<0){
+      const balanceAcc=parseFloat(value)
+      if(balanceAcc<0){
         window.alert('你是要存款还是取钱，不要钻空子')
       }else {
-        this.$emit('depositAmount',depositAcc)
+        this.$emit('balanceAmount',balanceAcc)
       }
     }
   }
@@ -62,7 +62,7 @@ export default class ButtonGroup extends Vue {
     color: #fff;
   }
 
-  .deposit {
+  .balance {
     background-color: #fff;
     color: #A8A8A8;
   }

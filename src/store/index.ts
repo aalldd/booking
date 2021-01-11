@@ -8,6 +8,8 @@ Vue.use(Vuex);
 type RootState = {
   tagList: TagList[],
   recordList: Record[],
+  balance: number,
+  flow: number,
   deposit:number
 }
 type Record = {
@@ -25,43 +27,54 @@ type TagList = {
 const store = new Vuex.Store({
   state: {
     tagList: defaultTagList,
-    recordList:[],
+    recordList: [],
+    balance: 0,
+    flow: 0,
     deposit:0
   } as RootState,
   mutations: {
     fetchTagList(state) {
-      state.tagList= JSON.parse(window.localStorage.getItem('tagList')||'[]') as TagList[]
+      state.tagList = JSON.parse(window.localStorage.getItem('tagList') || '[]') as TagList[];
+      if(state.tagList.length===0){
+        state.tagList=defaultTagList
+      }
     },
     saveTagList(state) {
       window.localStorage.setItem('tagList', JSON.stringify(state.tagList));
     },
-    fetchRecordList(state){
-      state.recordList=JSON.parse(window.localStorage.getItem('recordList')||'[]') as Record[]
+    fetchRecordList(state) {
+      state.recordList = JSON.parse(window.localStorage.getItem('recordList') || '[]') as Record[];
     },
-    saveRecordList(state){
-      window.localStorage.setItem('recordList',JSON.stringify(state.recordList))
+    saveRecordList(state) {
+      window.localStorage.setItem('recordList', JSON.stringify(state.recordList));
     },
-    createRecord(state,record){
-      const record2: Record=clone(record)
-      state.recordList.push(record2)
-      store.commit('saveRecordList')
+    createRecord(state, record) {
+      const record2: Record = clone(record);
+      state.recordList.push(record2);
+      store.commit('saveRecordList');
     },
-    saveDeposit(state){
-      window.localStorage.setItem('deposit',JSON.stringify(state.deposit))
-      console.log(window.localStorage.getItem('deposit'));
+    saveBalance(state) {
+      window.localStorage.setItem('balance', JSON.stringify(state.balance));
     },
-    fetchDeposit(state){
-      state.deposit=parseFloat(window.localStorage.getItem('deposit'|| '0') as string)
+    fetchBalance(state) {
+      state.balance=Number(window.localStorage.getItem('balance'))
     },
-    withdrawDeposit(state,value){
-      state.deposit-=value
-      store.commit('saveDeposit')
-      store.commit('fetchDeposit')
+    withdrawBalance(state, value) {
+      state.balance -= value;
+      store.commit('saveBalance');
+      store.commit('fetchBalance');
     },
-    depositAmount(state,value){
-      state.deposit+=value
-      store.commit('saveDeposit')
-      store.commit('fetchDeposit')
+    balanceAmount(state, value) {
+      state.balance += value;
+      store.commit('saveBalance');
+      store.commit('fetchBalance');
+    },
+    fetchFlow(state) {
+      state.flow = Number(window.localStorage.getItem('flow'));
+    },
+    saveFlow(state, value: number) {
+      state.flow = value;
+      window.localStorage.setItem('flow', JSON.stringify(state.flow));
     }
   },
 });
