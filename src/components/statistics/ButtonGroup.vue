@@ -1,7 +1,7 @@
 <template>
   <div class="buttonWrapper">
-    <button class="withdraw" @click="withdraw">Withdraw</button>
-    <button class="balance" @click="balanceAmount">deposit</button>
+    <button class="withdraw" @click="withdraw">撤回预算</button>
+    <button class="balance" @click="balanceAmount">增加预算</button>
   </div>
 </template>
 
@@ -52,7 +52,8 @@ export default class ButtonGroup extends Vue {
   button {
     border-radius: 10px;
     border: 1px solid #ccc;
-    width: 160px;
+    max-width: 160px;
+    min-width: 120px;
     height: 32px;
     font-size: 14px;
   }

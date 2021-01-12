@@ -61,10 +61,12 @@ const store = new Vuex.Store({
     withdrawBudget(state,value: number){
       state.budget-=value
       store.commit('saveBudget')
+      store.commit('fetchBudget')
     },
     addBudget(state,value: number){
       state.budget+=value
       store.commit('saveBudget')
+      store.commit('fetchBudget')
     },
     saveBudget(state){
       window.localStorage.setItem('budget',JSON.stringify(state.budget))

@@ -1,10 +1,10 @@
 <template>
   <div class="activity">
-    <div class="title">Activity</div>
+    <div class="title">消费记录</div>
     <ol class="items-Wrapper">
       <li v-for="(group,index) in groupList" :key="index">
         <h3 class="date">{{ beautify( group.title ) }}
-          <span>${{group.total}}</span>
+          <span>¥{{group.total}}</span>
         </h3>
         <ol>
           <li class="items" v-for="(item,index) in group.items" :key="index">
@@ -15,8 +15,8 @@
               <span class="tags">{{ tagString(item.labelList) }}</span>
               <span class="notes">{{ item.remark }}</span>
             </div>
-            <span class="item-amount" v-if="item.ExpenseType==='income'">+${{ item.amount }}</span>
-            <span class="item-amount" v-if="item.ExpenseType==='payment'">-${{item.amount}}</span>
+            <span class="item-amount" v-if="item.ExpenseType==='income'">¥+{{ item.amount }}</span>
+            <span class="item-amount" v-if="item.ExpenseType==='payment'">¥-{{item.amount}}</span>
           </li>
         </ol>
       </li>
@@ -110,17 +110,14 @@ export default class Activity extends Vue {
 
 <style scoped lang='scss'>
 .activity {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  z-index: 1;
-  background-color: #F2F7FA;
+  margin-top: 30px;
   border: 1px solid #ccc;
+  border-bottom:0;
   padding: 30px 20px 90px;
   border-top-left-radius: 30px;
   border-top-right-radius: 30px;
   width: 100%;
-  height: 300px;
+  max-height: 300px;
 
   .title {
     font-size: 18px;

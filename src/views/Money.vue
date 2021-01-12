@@ -12,10 +12,18 @@
         @update-createAt="setCreateAt"
         @giveRemark="getRemark"
     ></DateAndRemark>
-    <div class="BuyOrSell" @click="submitRecords">
-      BuyOrSell
+    <div class="BuyOrSell" @click="showModal">
+      提交账单
     </div>
-    <NumberPad @giveNumber="getAmount"></NumberPad>
+    <NumberKeyBoard @submit="getAmount"></NumberKeyBoard>
+    <a-modal
+        title="小提示"
+        :visible="visible"
+        :confirm-loading="confirmLoading"
+        @ok="handleOk"
+        @cancel="handleCancel"
+    ><p>{{ ModalText }}</p>
+    </a-modal>
   </div>
 </template>
 
@@ -27,8 +35,8 @@ import Icon from '@/components/Icon.vue';
 import Header from '@/components/money/Header.vue';
 import ButtonTab from '@/components/money/ButtonTab.vue';
 import Labels from '@/components/money/Labels.vue';
-import NumberPad from '@/components/money/NumberPad.vue';
 import DateAndRemark from '@/components/money/DateAndRemark.vue';
+import NumberKeyBoard from '@/components/NumberKeyBoard.vue';
 import dayjs from 'dayjs';
 import {Dialog} from 'vant';
 
@@ -44,13 +52,19 @@ type Record = {
   amount: number
 }
 @Component({
-  components: {Icon, Header, ButtonTab, Labels, NumberPad, DateAndRemark}
+  components: {Icon, Header, ButtonTab, Labels, NumberKeyBoard, DateAndRemark},
+  beforeRouteEnter(to,from,next){
+    next(vm=>{
+      vm.$store.commit('fetchTagList')
+    })
+  }
 })
 export default class Money extends Vue {
   tagList: TagList[] = [];
-
+  visible=false;
+  confirmLoading=false;
+  ModalText='您确定要提交这笔账单吗?'
   mounted() {
-    this.$store.commit('fetchTagList');
     this.tagList = this.$store.state.tagList;
   }
 
@@ -97,22 +111,36 @@ export default class Money extends Vue {
 //  拿到金钱数据
   getAmount(value: number){
     if(value){
+      window.alert('金额输入成功!')
       this.record.amount=value
     }
   }
 //  将record数据放到state中
   submitRecords(){
     if(this.record.ExpenseType&&this.record.createAt&&this.record.amount){
-      Dialog.alert({
-        title:'弹出框',
-        message:'确定要提交数据吗'
-      }).then(()=>{
-        this.$store.commit('createRecord',this.record)
-      }).catch(()=>{
-      })
+      this.$store.commit('createRecord',this.record)
     }else {
       window.alert('请输入开销类型,金额,日期')
     }
+  }
+
+  showModal() {
+    this.visible = true;
+  }
+
+  handleOk(e: EventTarget){
+    this.ModalText = '正在提交，请稍等';
+    this.confirmLoading = true;
+    setTimeout(() => {
+      this.visible = false;
+      this.confirmLoading = false;
+      this.submitRecords()
+    }, 2000);
+  }
+
+  handleCancel(e: EventTarget) {
+    console.log('Clicked cancel button');
+    this.visible = false;
   }
 }
 </script>
@@ -121,6 +149,7 @@ export default class Money extends Vue {
 .accounts {
   .BuyOrSell {
     margin: 0 30px;
+    color: #1ec531;
     background-color: #21B2C1;
     color: #fff;
     text-align: center;

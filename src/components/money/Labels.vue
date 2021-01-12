@@ -61,7 +61,7 @@ export default class Labels extends Vue {
   justify-content: flex-start;
   flex-wrap: wrap;
   align-items: center;
-  max-height: 150px;
+  max-height: 140px;
   overflow: scroll;
   margin: 30px 0 10px;
   .iconWrapper {

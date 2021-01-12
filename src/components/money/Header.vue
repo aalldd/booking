@@ -3,7 +3,7 @@
     <div class="iconWrapper" @click="goBack">
       <Icon name="left"></Icon>
     </div>
-    <span>Accounts</span>
+    <span>记账</span>
     <Icon name=""></Icon>
   </header>
 </template>

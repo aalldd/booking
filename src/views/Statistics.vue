@@ -25,31 +25,37 @@ import Activity from '@/components/statistics/Activity.vue';
 import Layout from '@/components/statistics/Layout.vue';
 
 @Component({
-  components: {PersonInfo, Balance, ButtonGroup, Nav, Activity, Layout}
+  components: {PersonInfo, Balance, ButtonGroup, Nav, Activity, Layout},
+  beforeRouteEnter(to, from, next) {
+    next(vm => {
+      vm.$store.commit('fetchRecordList');
+      vm.$store.commit('fetchFlow');
+      vm.$store.commit('fetchBudget');
+    });
+  }
 })
 export default class statistics extends Vue {
   recordList = [];
-  budget=0;
-  flow=0;
+  budget = 0;
+  flow = 0;
 
-  created() {
-    this.$store.commit('fetchRecordList');
-    this.$store.commit('fetchFlow')
-    this.$store.commit('fetchBudget')
+  mounted() {
     this.recordList = this.$store.state.recordList;
-    this.flow=this.$store.state.flow
-    this.budget=this.$store.state.budget
+    this.flow = this.$store.state.flow;
+    this.budget = this.$store.state.budget;
   }
-  withdrawBudget(value: number){
-    this.$store.commit('withdrawBudget',value)
-    this.$store.commit('fetchBudget')
-    this.budget=this.$store.state.budget
+
+  withdrawBudget(value: number) {
+    this.$store.commit('withdrawBudget', value);
+    this.budget = this.$store.state.budget;
   }
-  addBudget(value: number){
-    this.$store.commit('addBudget',value)
-    this.$store.commit('fetchBudget')
-    this.budget=this.$store.state.budget
+
+  addBudget(value: number) {
+    this.$store.commit('addBudget', value);
+    this.budget = this.$store.state.budget;
   }
+
+
 }
 </script>
 

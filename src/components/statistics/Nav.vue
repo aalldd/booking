@@ -1,7 +1,7 @@
 <template>
   <div class="nav">
-    <div class="staking">Capital flow</div>
-    <div class="amount-staking">${{balance}}</div>
+    <div class="staking">资金流水</div>
+    <div class="amount-staking">¥{{balance}}</div>
   </div>
 </template>
 

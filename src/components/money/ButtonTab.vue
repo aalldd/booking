@@ -1,10 +1,10 @@
 <template>
   <div class="buttonGroup">
     <div class="income" :class="{['active']:ExpenseType==='income'}">
-      <button @click="$emit('update:ExpenseType','income')">income</button>
+      <button @click="$emit('update:ExpenseType','income')">收入</button>
     </div>
     <div class="payment" :class="{['active']:ExpenseType==='payment'}">
-      <button @click="$emit('update:ExpenseType','payment')">payment</button>
+      <button @click="$emit('update:ExpenseType','payment')">支出</button>
     </div>
   </div>
 </template>

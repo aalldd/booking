@@ -2,11 +2,11 @@
   <div class="balance">
     <div class="budget">
       <h5>预算值</h5>
-      <div class="amount-total">${{ budget }}</div>
+      <div class="amount-total">¥{{ budget }}</div>
     </div>
     <div class="balance-left">
       <h5>剩余值</h5>
-      <div class="balance-amount">${{ balance }}</div>
+      <div class="balance-amount">¥{{ balance }}</div>
     </div>
   </div>
 </template>
@@ -26,12 +26,8 @@ export default class Balance extends Vue {
   }
 
   get balance() {
-    if (this.budget) {
-      const res = this.budget + this.$store.state.flow;
-      return res;
-    } else {
-      return 0;
-    }
+    const res = this.budget + this.$store.state.flow;
+    return res;
   }
 }
 </script>

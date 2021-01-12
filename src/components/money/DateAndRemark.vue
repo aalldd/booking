@@ -2,25 +2,12 @@
   <div>
     <div class="dateAndRemark">
       <div class="date">
-        <input readonly type="text" placeholder="2021-01-09" v-model="createAt">
-        <div class="calendarIconWrapper" @click="datePickerVisible=true">
-          <Icon name="calendar"></Icon>
-        </div>
+        <a-date-picker @change="onChange" placeholder="请选择日期"/>
       </div>
       <div class="remarks" @click="AddRemark">
-        <button>remarks</button>
+        <button>在这里输入备注吧~</button>
       </div>
     </div>
-    <van-datetime-picker
-        v-model="currentDate"
-        type="date"
-        title="选择年月日"
-        :min-date="minDate"
-        :max-date="maxDate"
-        v-if="datePickerVisible"
-        @confirm="confirmDate"
-        @cancel="closeDate"
-    />
   </div>
 </template>
 
@@ -35,20 +22,7 @@ import dayjs from 'dayjs';
   components: {Icon}
 })
 export default class DateAndRemark extends Vue {
-  minDate = new Date(2020, 0, 1);
-  maxDate = new Date(2025, 10, 1);
-  currentDate = new Date();
-  datePickerVisible = false;
   @Prop({required: true}) createAt: string | undefined;
-  confirmDate(value: Date) {
-    const date = dayjs(value).format('YYYY-MM-DD');
-    this.$emit('update-createAt', date);
-    this.datePickerVisible = false;
-  }
-
-  closeDate() {
-    this.datePickerVisible = false;
-  }
 
   AddRemark() {
     const remark=window.prompt('有什么备注信息将要说明吗?')
@@ -57,6 +31,10 @@ export default class DateAndRemark extends Vue {
     }else {
       window.alert('备注信息不要为空哦')
     }
+  }
+  onChange(value: Date) {
+    const date = dayjs(value).format('YYYY-MM-DD');
+    this.$emit('update-createAt', date);
   }
 }
 </script>
