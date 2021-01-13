@@ -1,8 +1,23 @@
 <template>
-  <div class="layout">
-    <router-link to="/statistics"><Icon name="home"></Icon></router-link>
-    <router-link to="/money"><Icon name="money"></Icon></router-link>
-    <router-link to="/charts"><Icon name="charts"></Icon></router-link>
+  <div class="nav-wrapper">
+    <div class="contentWrapper"><slot></slot></div>
+    <div class="layout">
+      <div class="itemWrapper">
+        <router-link to="/statistics" class="item" active-class="selected">
+          <Icon name="home"></Icon>
+        </router-link>
+      </div>
+      <div class="itemWrapper">
+        <router-link to="/money" class="item" active-class="selected">
+          <Icon name="money"></Icon>
+        </router-link>
+      </div>
+      <div class="itemWrapper">
+        <router-link to="/charts" class="item" active-class="selected">
+          <Icon name="charts"></Icon>
+        </router-link>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -18,18 +33,45 @@ export default class Layout extends Vue{
 </script>
 
 <style scoped lang='scss'>
-.layout{
-  min-width: 90%;
-  height: 50px;
-  position: absolute;
-  left: 0px;
-  bottom: 20px;
-  z-index: 2;
-  background-color: #fff;
-  border-radius: 10px;
-  margin:0 20px;
+.nav-wrapper{
   display: flex;
-  align-items: center;
-  justify-content: space-around;
+  background-color: #F7FAFD;
+  flex-direction: column;
+  height: 100vh;
+  .layout{
+    display: flex;
+    align-items: center;
+    min-height: 50px;
+    max-width: 90%;
+    margin-left: 5%;
+    margin-bottom: 5%;
+    text-align: center;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
+    >.itemWrapper{
+      flex: 1;
+      width: 20%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      >.item{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 25%;
+        height: 100%;
+      }
+      >.selected{
+        border-bottom: 2px solid #D191B5;
+      }
+    }
+  }
+  .contentWrapper{
+    overflow: auto;
+    flex-grow: 1;
+  }
 }
+
 </style>

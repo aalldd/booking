@@ -1,16 +1,19 @@
 <template>
-  <div>
-    <Echarts :options="option"></Echarts>
-  </div>
+  <Layout>
+    <div>
+      <Echarts :options="option"></Echarts>
+    </div>
+  </Layout>
+
 </template>
 
 <script lang='ts'>
 import Vue from 'vue';
 import {Component} from 'vue-property-decorator';
 import Echarts from './Echarts.vue';
-
+import Layout from '@/components/statistics/Layout.vue';
 @Component({
-  components: {Echarts}
+  components: {Echarts,Layout}
 })
 export default class Chart extends Vue {
   option = {

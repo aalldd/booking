@@ -111,14 +111,12 @@ export default class Activity extends Vue {
 <style scoped lang='scss'>
 .activity {
   margin-top: 30px;
-  border: 1px solid #ccc;
   border-bottom:0;
   padding: 30px 20px 90px;
   border-top-left-radius: 30px;
   border-top-right-radius: 30px;
   width: 100%;
-  max-height: 300px;
-
+  box-shadow: rgba(0,0,0,.25);
   .title {
     font-size: 18px;
     color: #000;
@@ -126,8 +124,6 @@ export default class Activity extends Vue {
   }
 
   .items-Wrapper {
-    max-height: 140px;
-    overflow: scroll;
     .date{
       display: flex;
       justify-content: space-between;

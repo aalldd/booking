@@ -1,16 +1,18 @@
 <template>
-  <div class="statistics">
-    <PersonInfo></PersonInfo>
-    <Balance :budget="budget"></Balance>
-    <ButtonGroup
-        @withdraw="withdrawBudget"
-        :balance="budget"
-        @balanceAmount="addBudget"
-    ></ButtonGroup>
-    <Nav :balance="flow"></Nav>
-    <Activity></Activity>
-    <Layout></Layout>
-  </div>
+  <Layout>
+    <div class="statistics">
+      <PersonInfo></PersonInfo>
+      <Balance :budget="budget"></Balance>
+      <ButtonGroup
+          @withdraw="withdrawBudget"
+          :balance="budget"
+          @balanceAmount="addBudget"
+      ></ButtonGroup>
+      <Nav :balance="flow"></Nav>
+      <Activity></Activity>
+    </div>
+  </Layout>
+
 </template>
 
 <script lang='ts'>
