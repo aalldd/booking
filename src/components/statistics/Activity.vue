@@ -1,7 +1,7 @@
 <template>
   <div class="activity">
     <div class="title">消费记录</div>
-    <ol class="items-Wrapper">
+    <ol class="items-Wrapper" v-if="groupList.length">
       <li v-for="(group,index) in groupList" :key="index">
         <h3 class="date">{{ beautify( group.title ) }}
           <span>¥{{group.total}}</span>
@@ -21,6 +21,7 @@
         </ol>
       </li>
     </ol>
+    <NoData v-else name="doc"></NoData>
   </div>
 </template>
 
@@ -30,7 +31,7 @@ import Vue from 'vue';
 import {Component} from 'vue-property-decorator';
 import clone from '@/lib/clone';
 import dayjs from 'dayjs';
-
+import NoData from '@/components/NoData.vue';
 type Record = {
   ExpenseType: string,
   labelList: string[],
@@ -38,7 +39,9 @@ type Record = {
   remark: string,
   amount: number
 }
-@Component
+@Component({
+  components:{NoData}
+})
 export default class Activity extends Vue {
 
   get recordList() {

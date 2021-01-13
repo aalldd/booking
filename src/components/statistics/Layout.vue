@@ -5,16 +5,19 @@
       <div class="itemWrapper">
         <router-link to="/statistics" class="item" active-class="selected">
           <Icon name="home"></Icon>
+          <span>明细</span>
         </router-link>
       </div>
       <div class="itemWrapper">
         <router-link to="/money" class="item" active-class="selected">
           <Icon name="money"></Icon>
+          <span>记账</span>
         </router-link>
       </div>
       <div class="itemWrapper">
         <router-link to="/charts" class="item" active-class="selected">
           <Icon name="charts"></Icon>
+          <span>报告</span>
         </router-link>
       </div>
     </div>
@@ -58,10 +61,15 @@ export default class Layout extends Vue{
       height: 100%;
       >.item{
         display: flex;
+        flex-direction: column;
         align-items: center;
         justify-content: center;
         width: 25%;
         height: 100%;
+        span{
+          display: block;
+          width: 150%;
+        }
       }
       >.selected{
         border-bottom: 2px solid #D191B5;

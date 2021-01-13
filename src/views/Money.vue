@@ -1,6 +1,6 @@
 <template>
   <div class="accounts">
-    <Header></Header>
+    <Header name="记账"></Header>
     <ButtonTab :ExpenseType="record.ExpenseType" @update:ExpenseType="getExpenseType"></ButtonTab>
     <Labels
         :labelList="tagList"

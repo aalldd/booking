@@ -3,22 +3,25 @@
     <div class="iconWrapper" @click="goBack">
       <Icon name="left"></Icon>
     </div>
-    <span>记账</span>
+    <span>{{ name }}</span>
     <Icon name=""></Icon>
   </header>
 </template>
 
 <script lang='ts'>
 import Vue from 'vue';
-import {Component} from 'vue-property-decorator';
+import {Component, Prop} from 'vue-property-decorator';
 import Icon from '@/components/Icon.vue';
+
 @Component({
-  components:{Icon}
+  components: {Icon}
 })
-export default class Header extends Vue{
+export default class Header extends Vue {
   $router: any;
-  goBack(){
-    this.$router.back()
+  @Prop({required: true}) name!: string;
+
+  goBack() {
+    this.$router.back();
   }
 }
 </script>

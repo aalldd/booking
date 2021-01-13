@@ -2,7 +2,7 @@
   <div class="person-info">
     <div class="person-name">
       <h3>Hello,</h3>
-      <h4>Daniel</h4>
+      <h4>user</h4>
     </div>
     <div class="person-avatar">
       <img src="../../assets/userAvatar.jpg" alt="">
