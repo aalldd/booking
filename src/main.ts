@@ -3,7 +3,7 @@ import App from './App.vue';
 import './registerServiceWorker';
 import router from './router';
 import store from './store';
-import {DatePicker, Modal} from 'ant-design-vue';
+import {DatePicker, Modal,message} from 'ant-design-vue';
 import 'ant-design-vue/dist/antd.css';
 import {Field, Cell} from 'vant';
 import 'vant/lib/index.css';
@@ -13,6 +13,7 @@ Vue.use(Field);
 Vue.use(Cell);
 Vue.use(DatePicker);
 Vue.use(Modal);
+Vue.prototype.$message=message
 new Vue({
   router,
   store,

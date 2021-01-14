@@ -135,6 +135,7 @@ export default class Money extends Vue {
       this.visible = false;
       this.confirmLoading = false;
       this.submitRecords()
+      this.$message.success('数据提交成功!')
     }, 2000);
   }
 

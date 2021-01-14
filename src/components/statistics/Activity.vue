@@ -136,7 +136,7 @@ export default class Activity extends Vue {
   .items {
     display: flex;
     justify-content: space-between;
-
+    margin-top: 10px;
     .imgWrapper {
       min-width: 50px;
       max-width: 50px;
