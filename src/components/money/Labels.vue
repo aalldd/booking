@@ -64,6 +64,9 @@ export default class Labels extends Vue {
   max-height: 140px;
   overflow: scroll;
   margin: 30px 0 10px;
+  &::-webkit-scrollbar{
+    display: none;
+  }
   .iconWrapper {
     width: 20%;
     margin-bottom: 40px;

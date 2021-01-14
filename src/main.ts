@@ -27,12 +27,4 @@ window.onload = function () {
 
 if (document.documentElement.clientWidth > 500) {
   window.alert('请使用手机打开本页面，保证浏览效果');
-  const image = document.createElement('img');
-  image.src = '/qrcode.png';
-  image.style.position = 'fixed';
-  image.style.left = '50%';
-  image.style.top = '50%';
-  image.style.transform = 'translate(-50%,-50%)';
-  image.style.boxShadow = '0 0 10px rgba(0,0,0,.3)';
-  document.body.appendChild(image);
 }

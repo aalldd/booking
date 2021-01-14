@@ -79,6 +79,9 @@ export default class Layout extends Vue{
   .contentWrapper{
     overflow: auto;
     flex-grow: 1;
+    &::-webkit-scrollbar{
+      display: none;
+    }
   }
 }
 

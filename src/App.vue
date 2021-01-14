@@ -20,4 +20,8 @@ img{
   width: 100%;
   height: 100%;
 }
+#app{
+  max-width: 500px;
+  margin: 0 auto;
+}
 </style>
